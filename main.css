@@ -117,8 +117,12 @@ form submit {
 /* Project Page */
 #main-content-project {
     position: fixed;
-    top: var(--universal-spacing);
+    bottom: var(--universal-spacing);
     right: calc(var(--universal-spacing)*2);
+    width: auto;
+    max-width: 100%;
+    padding: var(--universal-spacing);
+    box-sizing: border-box;
 }
 #project-list {
     display: flex;
@@ -129,14 +133,33 @@ form submit {
 }
 #project-list a {
     color: var(--main-font-color);
-    transition-property: opacity;
+    transition-property: opacity, transform;
     transition-duration: 0.5s;
     font-size: 6vw;
-    transition: transform 0.3s;
 }
 #project-list a:hover {
     opacity: 0.2;
     transform: scale(1.1);
+}
+
+@media screen and (min-width: 1300px) {
+    #project-list a {
+        font-size: min(5vw, 80px);
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #main-content-project {
+        position: static;
+        width: 100%;
+        padding: var(--universal-spacing);
+    }
+    #project-list {
+        align-items: center;
+    }
+    #project-list a {
+        font-size: 8vw;
+    }
 }
 
 
