@@ -82,26 +82,40 @@ const lightToggle = document.querySelector('.light-btn');
 const darkText = document.getElementById('dark-text');
 const lightText = document.getElementById('light-text');
 
-darkToggle.addEventListener('click', () => {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    darkText.innerHTML = 'DARK ■';
-    lightText.innerHTML = 'LIGHT □';
+// Function to set the theme
+const setTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    if (theme === 'dark') {
+        darkText.innerHTML = 'DARK ■';
+        lightText.innerHTML = 'LIGHT □';
+    } else {
+        lightText.innerHTML = 'LIGHT ■';
+        darkText.innerHTML = 'DARK □';
+    }
     updateRainColor();
+    localStorage.setItem('theme', theme);
+};
+
+// Event listeners for theme toggle buttons
+darkToggle.addEventListener('click', () => {
+    setTheme('dark');
 });
 
 lightToggle.addEventListener('click', () => {
-    document.documentElement.setAttribute('data-theme', 'light');
-    lightText.innerHTML = 'LIGHT ■';
-    darkText.innerHTML = 'DARK □';
-    updateRainColor();
+    setTheme('light');
 });
 
-updateRainColor();
+// Apply the saved theme on page load
+const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+setTheme(savedTheme);
 
-if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+// Set the correct innerHTML based on the saved theme
+if (savedTheme === 'dark') {
     darkText.innerHTML = 'DARK ■';
-}else {
+    lightText.innerHTML = 'LIGHT □';
+} else {
     lightText.innerHTML = 'LIGHT ■';
+    darkText.innerHTML = 'DARK □';
 }
 
 // Loader Animation
